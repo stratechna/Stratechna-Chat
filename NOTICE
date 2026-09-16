@@ -1,0 +1,19 @@
+Stratechna Chat
+Copyright 2026 Stratechna — Tecnologia e Serviços Empresariais
+
+O Stratechna Chat é o Zulip (https://zulip.com), distribuído ao abrigo da
+Licença Apache, Versão 2.0. O texto da licença acompanha o próprio Zulip, em
+/home/zulip/deployments/current/LICENSE dentro da imagem oficial.
+
+NÃO HÁ IMAGEM DERIVADA
+Ao contrário do Stratechna Meet e do Stratechna Social, aqui não publicamos
+imagem nenhuma: corre a imagem oficial `zulip/docker-zulip`, sem alterações.
+Não há, por isso, distribuição de obra derivada.
+
+A marca é aplicada em RUNTIME, por organização, pelas definições que o próprio
+Zulip expõe para esse efeito — nome, ícone e logótipos. Ver marca/aplicar.sh e
+a explicação no README.
+
+MARCAS
+«Zulip» é marca dos respectivos titulares. O Stratechna Chat não é afiliado
+nem endossado pelo projecto Zulip.
