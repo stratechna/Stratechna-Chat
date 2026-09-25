@@ -17,7 +17,12 @@ O que está aqui:
                     descrição), pela API HTTP documentada.
   marca/ficheiros/  os símbolos.
 
-A interface web NÃO é alterada: o nome do fabricante aí vive em pacotes de
-webpack com hash de conteúdo, e uma camada de substituição de texto parte-se em
-silêncio a cada actualização. O único gancho de marca ao nível do servidor que o
-Zulip oferece para a interface é o CUSTOM_LOGO_URL, que está aplicado.
+Os PACOTES de webpack não são alterados. O que está lá dentro são chaves de
+tradução (pares `id`/`defaultMessage`), e mexer numa chave é o mesmo que mexer
+num `msgid`: deita fora a tradução em silêncio. O texto que o utilizador lê vem
+dos ficheiros de tradução, e é neles que a marca entra.
+
+Consequência conhecida: um utilizador que ponha a interface em INGLÊS continua a
+ver o nome do fabricante nas trinta frases que o mencionam, porque em inglês não
+há tradução — lê-se o `defaultMessage` do pacote. Em português não sobra
+nenhuma.
