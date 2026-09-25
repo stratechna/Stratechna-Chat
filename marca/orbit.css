@@ -1,0 +1,22 @@
+/* Ajustes de marca do Stratechna Chat, servidos em todas as páginas da app.
+ *
+ * Só se esconde o que não faz sentido num Chat nosso; não se muda aspecto
+ * nenhum do produto. Um ficheiro à parte, referenciado no `base.html`, para
+ * não se ter de mexer em folhas de estilo do upstream.
+ */
+
+/* «Desktop & mobile apps» — a página que leva o cliente a descarregar o cliente
+ * de desktop do fabricante, com a marca dele. Não é o comutador de apps do
+ * Orbit, que vive na grelha; é literalmente a loja de aplicações do Zulip.
+ * Esconde-se o item inteiro, não só a ligação, senão fica um espaço morto no
+ * menu com o ícone à mostra.
+ */
+#gear-menu-dropdown li:has(> a[href="/apps/"]),
+#gear-menu-dropdown li:has(> a[href^="/apps"]) {
+    display: none !important;
+}
+
+/* O rodapé das páginas de entrada tem a mesma ligação. */
+.footer__section li:has(> a[href="/apps/"]) {
+    display: none !important;
+}

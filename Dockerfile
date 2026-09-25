@@ -154,4 +154,33 @@ RUN set -eu; \
     sobra=$(grep -c "Zulip" meta_tags.html portico-header.html | grep -v ":0" | wc -l); \
     echo "moldura do portico tratada (ficheiros com restos: $sobra)"
 
+# 8. O que não faz sentido num Chat nosso, e o favicon.
+#
+# «Desktop & mobile apps» leva o cliente a descarregar o cliente de desktop do
+# fabricante, com a marca dele. Não é o comutador de apps do Orbit — esse vive
+# na grelha; isto é literalmente a loja de aplicações do Zulip. Esconde-se por
+# folha de estilo própria, referenciada no `base.html`: mexer no `<li>` dentro
+# do pacote compilado seria alterar um template de handlebars minificado, que é
+# a coisa mais frágil que há aqui.
+#
+# E o favicon, que tinha ficado a ser o do fabricante — é o que se vê no
+# separador do browser e nos favoritos.
+# NÃO se usa o `static()` do Django aqui. O Zulip serve os estáticos com
+# `ManifestStaticFilesStorage`, que exige que o ficheiro conste de um manifesto
+# gerado na construção do upstream; um ficheiro nosso não consta, e o
+# `static('orbit-marca.css')` rebenta com «Missing staticfiles manifest entry»
+# em TODAS as páginas — o que deitou o Chat abaixo com 500 a 25-09-2026.
+# Caminho literal, com versão à mão para a cache.
+COPY marca/orbit.css /home/zulip/prod-static/orbit-marca.css
+COPY marca/ficheiros/chat-icone.png /home/zulip/prod-static/images/favicon.png
+COPY marca/ficheiros/chat-icone.svg /home/zulip/prod-static/images/favicon.svg
+
+RUN set -eu; \
+    F=/home/zulip/deployments/current/templates/zerver/base.html; \
+    grep -q "orbit-marca.css" "$F" && { echo "ja referenciada"; exit 0; }; \
+    grep -q "{% block webpack %}" "$F" || { echo "ERRO: o base.html mudou de forma"; exit 1; }; \
+    sed -i "s#{% block webpack %}#<link rel=\"stylesheet\" href=\"/static/orbit-marca.css?v=1\" />\n        {% block webpack %}#" "$F"; \
+    grep -q "orbit-marca.css" "$F" || { echo "ERRO: a folha de estilo nao ficou referenciada"; exit 1; }; \
+    echo "folha de estilo da marca referenciada no base.html"
+
 USER root
