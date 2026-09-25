@@ -22,7 +22,20 @@ tradução (pares `id`/`defaultMessage`), e mexer numa chave é o mesmo que mexe
 num `msgid`: deita fora a tradução em silêncio. O texto que o utilizador lê vem
 dos ficheiros de tradução, e é neles que a marca entra.
 
-Consequência conhecida: um utilizador que ponha a interface em INGLÊS continua a
-ver o nome do fabricante nas trinta frases que o mencionam, porque em inglês não
-há tradução — lê-se o `defaultMessage` do pacote. Em português não sobra
-nenhuma.
+O `defaultMessage` de cada mensagem — o texto de reserva, lido quando a língua
+não tem tradução — esse sim é alterado: não é chave de nada, e era o que fazia
+um utilizador em inglês continuar a ler o nome do fabricante.
+
+O que fica, e porquê:
+
+  as chaves de procura        invisíveis; mexer-lhes deita fora as traduções.
+  o painel «Acerca»           declara o Zulip Server e a sua licença. É
+                              atribuição honesta, e fica de propósito — como a
+                              caixa «Acerca» do SOGo.
+  «Zulip Botserver», e o
+  tipo de interface de um
+  webhook («Zulip» vs
+  «Slack-compatible»)         nomes de formato e de protocolo, não de marca.
+  a página /apps              descreve as aplicações de computador e telemóvel
+                              do Zulip, que se chamam mesmo assim nas lojas.
+                              Renomeá-las seria enganar quem as vai descarregar.

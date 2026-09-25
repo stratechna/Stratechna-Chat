@@ -39,7 +39,23 @@ RUN set -eu; \
       "${NOME}" pt pt_PT pt_BR; \
     rm -f /tmp/frontend.py
 
-# 5. Os títulos das páginas.
+# 5. O texto de reserva dentro dos pacotes.
+#
+# O `id` de cada mensagem é a chave de procura e fica INTOCADO. O
+# `defaultMessage` é o texto que se lê quando a língua não tem tradução — em
+# português nunca é lido, em inglês é sempre. Era o que faltava para fechar as
+# trinta frases.
+#
+# O nginx serve os ficheiros pré-comprimidos (`gzip_static on`), por isso cada
+# pacote tocado tem o seu `.gz` refeito — a mesma armadilha que a 10-09 deixou
+# o Docs a dizer «Paperless-ngx» num `.gz` que ninguém regenerava.
+COPY marca/pacotes.py /tmp/pacotes.py
+
+RUN set -eu; \
+    python3 /tmp/pacotes.py /home/zulip/prod-static/webpack-bundles "${NOME}"; \
+    rm -f /tmp/pacotes.py
+
+# 6. Os títulos das páginas.
 #
 # Quase todos terminam em « | Zulip»; a moldura da app usa «<organização> -
 # Zulip», e as três molduras do correio dizem só «Zulip». É texto literal, não é
@@ -110,7 +126,7 @@ RUN set -eu; \
       echo "o upstream ja corrigiu o espaco em falta"; \
     fi
 
-# 6. Os três restos da moldura do portico.
+# 7. Os três restos da moldura do portico.
 #
 # O que sobrou depois dos títulos e das traduções, e que se vê:
 #   - `og:site_name`, que é o nome que aparece na pré-visualização de um link
